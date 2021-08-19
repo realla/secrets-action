@@ -1,0 +1,19 @@
+name: 'secrets-action'
+author: 'Barnaby Gray'
+description: 'Decrypt GPG secrets'
+inputs:
+  file:
+    description: 'The name of the file to decrypt'
+    required: true
+  passphrase:
+    description: 'The passphrase used to encrypt the secrets'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Decrypt GPG secrets
+      shell: bash
+      run: ${{ github.action_path }}/decrypt_secret.sh
+      env:
+        GPG_PASSPHRASE: ${{ inputs.passphrase }}
+        FILE: ${{ inputs.file }}
